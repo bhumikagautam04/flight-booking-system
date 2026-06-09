@@ -1,0 +1,37 @@
+.maincontainer {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:auto;
+    flex-wrap:wrap;
+}
+
+.box{
+    
+    width:900px;
+   overflow:hidden; 
+    height:"auto";
+    margin:40px;
+    background-color:#E7D8D8;
+    border-radius:30px;
+    border: 2px solid black;
+   box-shadow: 5px 5px 10px black;
+   padding: 20px;
+}
+.textstyle{
+    font-family:'Bitcount-single';
+    font-size:35px;
+    font-weight:100px;
+    text-shadow: 5px 5px 6px whitesmoke;
+    color:white
+}
+ .form-control:hover{
+    border-color:pink;
+    box-shadow:4px 6px 20px black;
+ }
+ .text{
+    font-family:'Bitter';
+    font-size:20px;
+    font-weight:700px;
+    color:'black';
+ }

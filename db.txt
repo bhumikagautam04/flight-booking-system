@@ -1,0 +1,120 @@
+CREATE DATABASE flight;
+USE flight;
+
+CREATE TABLE city (
+    city_id INT PRIMARY KEY AUTO_INCREMENT,
+    city_name VARCHAR(45)
+);
+
+INSERT INTO city(city_id, city_name) VALUES
+(1,'Delhi'),
+(2,'Mumbai'),
+(3,'Bhopal'),
+(4,'Indore'),
+(5,'Jaipur'),
+(6,'Pune'),
+(7,'Ahmedabad'),
+(8,'Chennai'),
+(9,'Kolkata'),
+(10,'Hyderabad'),
+(11,'New York'),
+(12,'London'),
+(13,'Paris'),
+(14,'Dubai'),
+(15,'Singapore'),
+(16,'Tokyo'),
+(17,'Sydney'),
+(18,'Toronto'),
+(19,'Bangkok'),
+(20,'Kuala Lumpur'),
+(21,'Hong Kong'),
+(22,'Berlin'),
+(23,'Rome'),
+(24,'Amsterdam'),
+(25,'Istanbul'),
+(26,'Seoul'),
+(27,'Los Angeles'),
+(28,'San Francisco'),
+(29,'Doha'),
+(30,'Abu Dhabi');
+
+CREATE TABLE flight (
+    flight_id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_name VARCHAR(45),
+    flight_type VARCHAR(45),
+    flight_seat INT,
+    days INT,
+    
+    source_city VARCHAR(45),
+    departure_time TIME,
+
+    destination_city varchar(45),
+    arrival_time TIME,
+
+    company VARCHAR(45),
+    logo VARCHAR(255),
+
+    FOREIGN KEY (source_city)
+    REFERENCES city(city_id),
+
+    FOREIGN KEY (destination_city)
+    REFERENCES city(city_id)
+);
+
+INSERT INTO flight
+(flight_id,flight_name,flight_type,flight_seat,days,
+source_city,departure_time,destination_city,
+arrival_time,company,logo)
+
+VALUES
+
+(2,'Indigo 6E101','International',180,'Monday,Wednesday',
+5,'02:14:00',13,'12:14:00','Indigo',NULL),
+
+(3,'Indigo 6E101','International',180,'Tuesday,Friday',
+5,'02:14:00',13,'12:14:00','Indigo',NULL),
+
+(4,'Indigo 6E101','Domestic',180,'Sunday',
+15,'06:19:00',14,'02:17:00','Indigo',NULL),
+
+(5,'Indigo 6E101','Domestic',180,'Saturday',
+6,'11:48:00',1,'11:48:00','Indigo',NULL),
+
+(6,'Air India AI901','International',300,'Monday',
+8,'05:45:00',19,'10:15:00',
+'Air India','flight1.jpg'),
+
+(7,'Air India AI901','International',300,'Tuesday',
+4,'20:22:00',15,'03:22:00',
+'Air India','airplane.png'),
+
+(8,'Air India AI901','International',300,'Friday',
+4,'20:22:00',15,'03:22:00',
+'Air India','airplane.png'),
+
+(9,'Indigo 6E101','Domestic',180,'Thursday',
+12,'18:29:00',8,'04:28:00',
+'Indigo','airplane-ticket.png');
+
+
+CREATE TABLE admin (    
+
+    city_id INT,
+    flight_id INT,
+
+    email VARCHAR(100) primary key,
+    mobile_no INT primary key                                                                   ,
+
+    admin_name VARCHAR(100),
+    password VARCHAR(100),
+
+    picture TEXT,
+
+    FOREIGN KEY (city_id)
+    REFERENCES city(city_id),
+
+    FOREIGN KEY (flight_id)
+    REFERENCES flight(flight_id)
+);
+
+

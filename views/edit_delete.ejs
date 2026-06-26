@@ -12,9 +12,8 @@
    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="/javascripts/flight_data.js"></script>
     </head>
-      <form action="/flight/submit_flight_information"
-      method="post"
-      enctype="multipart/form-data">
+      <form action="/flight/flight_edit_delete"
+      method="post">
     <body>
 <div class="maincontainer">
         <div class="box">    
@@ -24,31 +23,30 @@
                        <div style="display: flex;flex-direction:center;width:100%; align-items:center; justify-content:space-between;padding:5px;border-radius: 15px;background-color:black;">
                         <div style="display:flex; align-items:center; width:100%;">
                         <span><img src="/images/airplane.png" style="width:40px; height:40px;"></span> 
-                        <span class="textstyle">SkyNova Airlines</span> 
-                        </div>
-                        <a href="/flight/fetch_all_flight" style="cursor: pointer;">
+                        <span class="textstyle">Modify Flight Details</span> 
+                         </div>
+                         <a href="/flight/fetch_all_flight">
                         <div >
                         <span><img src="/images/airplane-ticket.png" style="width:40px; height:40px;"></span>  
-                        </div>  
-                        </a>
+                        </div> 
+                        </a> 
                         </div>             
                     </div>
                     </div>
+                    <input type="hidden" name="flight_id" value="<%= data.flight_id %>"/>
                     <div class="row">
                         <div class="col-md-6" style="margin-top:20px;">
-                            <label class="form-label text" >Flight Name</label>
+                            <label class="form-label text">Flight Name</label>
                            <div class="form-floating">
-                            <input class="form-control" type="text" placeholder=" " name="flightname" style="border-radius:15px;">
+                            <input class="form-control" type="text" placeholder=" " name="flightname" value="<%=data.flight_name %>"style="border-radius:15px;">
                             <label for="flightname">Flight Name</label>
                            </div>
                         </div>
                         <div class="col-md-6" style="margin-top:20px;">
-                             <label class="form-label text" >Flight Type</label>
+                             <label class="form-label text">Flight Type</label>
                             <div class="form-floating">
   <select class="form-select form-control" id="flighttype" name="flighttype" aria-label="Choose Type....." style="border-radius:15px;">
-    <option selected>Choose Type.....</option>
-      <option value="Domestic">Domestic</option>
-    <option value="International">International</option>
+    <option selected value="<%= data.flight_type %>"><%= data.flight_type %></option>
   </select>
   <label for="Choose Type">Choose Type...</label>
 </div>
@@ -58,7 +56,7 @@
     <div class="col-md-4" style="margin-top:20px;">
                                     <label class="form-label text" >Flight Seats</label>
                            <div class="form-floating">
-                            <input class="form-control" type="text" placeholder=" " name="flightseats" style="border-radius:15px;">
+                            <input class="form-control" type="text" placeholder=" " name="flightseats" value="<%= data.flight_seat %>"style="border-radius:15px;">
                             <label for="flightseats">Flight Seats</label>
 </div>
 </div>
@@ -111,29 +109,29 @@
  <div class="col-md-3" style="margin-top:20px;">
 <label class="form-label text" >Source City</label>
  <select class="form-select form-control" id="sourcecity" name="sourcecity" aria-label="Select Source CIty" style="border-radius:15px;">
-    <option selected>Select Source City</option>
+    <option selected value="<%= data.source_city %>"> <%= data.source_city %></option>
   </select>
   </div>
            <div class="col-md-3" style="margin-top:20px;">
             <label class="form-label text" >Departure Time</label>
-     <input type="time" class="form-control" placeholder="Departure Time" name="departuretime" style="border-radius:15px;"/>
+     <input type="time" class="form-control" placeholder="Departure Time" name="departuretime"value="<%= data.departure_time %>" style="border-radius:15px;"/>
         </div> 
            <div class="col-md-3" style="margin-top:20px;">
 <label class="form-label text" >Destination City</label>
  <select class="form-select form-control" id="destinationcity" name="destinationcity" aria-label="Select Destination CIty" style="border-radius:15px;">
-    <option selected>Select Destination City</option>
+    <option selected value="<%= data.destination_city %>"><%= data.destination_city %></option>
   </select>
 </div> 
     <div class="col-md-3" style="margin-top:20px;">
          <label class="form-label text" >Arrival Time</label>
-     <input type="time" class="form-control" placeholder="Arrival Time" name="arrivaltime" style="border-radius:15px;"/>
+     <input type="time" class="form-control" placeholder="Arrival Time" name="arrivaltime" value="<%= data.arrival_time %>" style="border-radius:15px;"/>
         </div>
         <datalist id="cityOptions"></datalist>
         <div class="row">
                         <div class="col-md-6" style="margin-top:20px;">
                             <label class="form-label text" >Company</label>
                            <div class="form-floating">
-                            <input class="form-control" type="text" placeholder=" " name="company" style="border-radius:15px;">
+                            <input class="form-control" type="text" placeholder=" " name="company" value="<%= data.company %>" style="border-radius:15px;">
                             <label for="company">Company</label>
                            </div>
                            </div>
@@ -147,16 +145,14 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6" style="margin-top:20px;">
-                    <input class="btn btn-primary" type="submit" value="Submit" style="border-radius:15px;width:100%;background-color:black;border-color:black;">
+                    <input class="btn btn-primary" type="submit" name="btn" value="Edit" style="border-radius:15px;width:100%;background-color:black;border-color:black;">
                         </div>
                         <div class="col-md-6" style="margin-top:20px;">
-                    <input class="btn btn-primary" type="reset" value="Reset" style="border-radius:15px;width:100%;background-color:black;border-color:black;">
+                    <input class="btn btn-primary" type="submit" name="btn" value="Delete" style="border-radius:15px;width:100%;background-color:black;border-color:black;">
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12" style="margin-top:20px;">
-                          <%=message%>
-                        </div>
+                       
                       </div>
     </div>   
 </div>

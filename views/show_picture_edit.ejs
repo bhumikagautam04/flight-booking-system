@@ -1,0 +1,11 @@
+<html>
+    <center>
+        <form action="/flight/final_picture_edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="flight_id" value="<%= data.id %>"/>
+        <h2><%= data.name%></h2>
+        <img src="/images/<%= data.picture %>" style="width:400px; height:400px;"/><br><br><br>
+        <input type="file" name="picture" style="background-color:black;height:20px"/><br><br><br>
+        <input type="submit" value="Edit Picture" style="background-color:black;color:white;width:200px;height:50px;border-radius:10px;"/>
+     </form>
+    </center>
+</html>

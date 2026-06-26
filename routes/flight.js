@@ -36,5 +36,83 @@ router.post("/submit_flight_information", upload.single('picture'), function(req
         }
     });
 })
+router.get("/fetch_all_flight",function(req,res){
+
+    pool.query("select * from flight", function(err,result){
+        if(err){
+            res.render('DisplayFlight',{status:false, data:[]});
+        } else {
+            res.render('DisplayFlight',{status:true, data:result});
+        }
+    })
+})
+router.get('/edit_delete/:flight_id',function(req,res){
+   pool.query("select * from flight where flight_id=?",[req.params.flight_id],function(err,result){
+     if(err)
+     {
+        
+        res.render('edit_delete', {status:false, data :[]});
+     }
+     else{
+        res.render("edit_delete", {status:true , data:result[0]});
+     }
+   })
+})
+
+router.post("/flight_edit_delete",function(req,res){
+    var btn_value=req.body.btn
+ if(btn_value=="Edit")
+ {
+    pool.query("update flight set flight_name=?, flight_type=?, flight_seat=?, source_city=?, departure_time=?, destination_city=?, arrival_time=?, company=? where flight_id=?",[req.body.flightname, req.body.flighttype, req.body.flightseats, req.body.sourcecity, req.body.departuretime, req.body.destinationcity, req.body.arrivaltime, req.body.company,req.body.flight_id],
+    function(err,result){
+    if(err)
+    {
+        res.redirect('/flight/fetch_all_flight');
+    }
+     else
+    {
+        res.redirect('/flight/fetch_all_flight');
+    }
+ })  
+}
+
+else{
+    pool.query("delete from flight where flight_id=?",[req.body.flight_id],function(err,result){
+        if(err)
+         {
+        res.redirect('/flight/fetch_all_flight');
+    }
+     else
+    {
+        res.redirect('/flight/fetch_all_flight');
+    }
+    })
+}
+})
+
+router.get("/show_picture/:id/:name/:picture", function(req,res){
+    res.render("show_picture_edit", {data:req.params})
+})
+
+router.post("/final_picture_edit",upload.single("picture"),function(req,res){
+
+    if(!req.file){
+        return res.redirect("/flight/fetch_all_flight");
+    }
+    pool.query("update flight set logo=? where flight_id=?",[req.file.filename,req.body.flight_id],function(err,result){
+       
+        if(err)
+        {
+            res.redirect('/flight/fetch_all_flight')
+        }
+        else{
+            res.redirect('/flight/fetch_all_flight')
+        }
+    })
+})
+router.get("/login_page",function(req,res){
+    res.render("login_page");
+})
+
 
 module.exports = router;

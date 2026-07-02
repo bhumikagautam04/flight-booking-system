@@ -75,6 +75,7 @@
     font-family:'Poppins',sans-serif;
 }
 
+
 body{
     min-height:100vh;
     background:linear-gradient(
@@ -104,7 +105,6 @@ body{
 
     display:flex;
 }
-
 
 
 
@@ -258,4 +258,71 @@ label{
 .brand-content p{
     font-size:18px;
     margin-top:10px;
+}
+.textstyle3{
+    font-family:'Stack Sans Notch';
+    font-size:35px;
+    font-weight:100px;
+    text-shadow: 3px 3px 6px black;
+    color:black;
+}
+
+.dashboardmaincontainer{
+            width:100%;
+            min-height:100vh;
+            background:#0f172a;
+        }
+
+        .appbar{
+            width:100%;
+            height:70px;
+            background:#b7d7ff;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 15px;
+        }
+.dashboardbox{
+    width:100%;
+    min-height:100vh;
+    background:#b7d7ff;
+    padding:15px;
+    margin-top:10px;
+    overflow:visible;   /* IMPORTANT FIX */
+}
+        .textstyle4{
+    font-family:'Bitcount-single';
+    font-size:25px;
+    font-weight:100px;
+    text-shadow: 3px 3px 6px black;
+    color:black;
+    
+}
+.dashboard-divider{
+    width:100%;
+    height:2px;
+    background-color: #0f172a;
+    padding: 0%;
+    margin:12px 0;
+}
+.sidebar-link{
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+.sidebar-link span{
+    white-space: nowrap;
+}
+
+.sidebar-link:hover{
+    background-color: rgba(255,255,255,0.15);
+}
+.sidebar-link:hover img{
+    filter: brightness(1.1);
 }

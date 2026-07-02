@@ -110,9 +110,6 @@ router.post("/final_picture_edit",upload.single("picture"),function(req,res){
         }
     })
 })
-router.get("/login_page",function(req,res){
-    res.render("login_page");
-})
 
 
 module.exports = router;

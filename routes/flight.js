@@ -27,6 +27,7 @@ router.post("/submit_flight_information", upload.single('picture'), function(req
     [req.body.flightname, req.body.flighttype, req.body.flightseats, days, req.body.sourcecity, req.body.departuretime, req.body.destinationcity, req.body.arrivaltime, req.body.company, logo],
     function(err,result){
         if(err){
+             console.log(err);
             console.log("Days:", req.body.days);
             console.log("Joined Days:", days);
             console.log("File:", req.file);
@@ -110,6 +111,29 @@ router.post("/final_picture_edit",upload.single("picture"),function(req,res){
         }
     })
 })
+router.get("/search_by_id",function(req,res){
+    res.render("search_by_id",{message:" "});
+})
 
+ router.post('/fetch_by_id', function(req,res){
+   var flightId = req.body.flight_id || req.body.flightid;
+
+   pool.query("select * from flight where flight_id=?",[flightId],function(err,result){
+        if(err)
+        {
+            res.render('edit_delete', {status:false,data:[],message:'server error'});
+        }
+        else
+        {
+            if(result.length==1)
+            {
+                res.render('edit_delete', {status:true,data:result[0],message:" "});
+            }
+            else{
+                res.render('search_by_id',{message:'Flight ID does not exist', flight_id:flightId})
+            }
+        }
+    })
+})
 
 module.exports = router;

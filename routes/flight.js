@@ -2,9 +2,17 @@ var express = require('express');
 var pool = require('./pool');
 var router =express.Router();
 var upload=require('./multer');
+const {check_user} = require('./checkuser');
+var {LocalStorage} =require('node-localstorage');
+var localStorage = new LocalStorage('./scratch');
 
 router.get('/flight_interface', function(req,res,next){
-    res.render('flight_interface',{message:""});
+      var admin = check_user(localStorage);
+      if(admin){
+        res.render('flight_interface',{message:""});
+      } else {
+        res.redirect('/admin/login_page');
+      }
 });
 
 router.get("/fetch_all_city", function(req,res){
@@ -38,24 +46,32 @@ router.post("/submit_flight_information", upload.single('picture'), function(req
     });
 })
 router.get("/fetch_all_flight",function(req,res){
+      var admin = check_user(localStorage);
+        if(!admin){
+            return res.redirect('/admin/login_page');
+        }
 
     pool.query("select * from flight", function(err,result){
         if(err){
-            res.render('DisplayFlight',{status:false, data:[]});
+            res.render('DisplayFlight',{status:false, data:[],admin:admin});
         } else {
-            res.render('DisplayFlight',{status:true, data:result});
+            res.render('DisplayFlight',{status:true, data:result,admin:admin});
         }
     })
 })
 router.get('/edit_delete/:flight_id',function(req,res){
+      var admin = check_user(localStorage);
+      if(!admin){
+        return res.redirect('/admin/login_page');
+      }
    pool.query("select * from flight where flight_id=?",[req.params.flight_id],function(err,result){
      if(err)
      {
         
-        res.render('edit_delete', {status:false, data :[]});
+        res.render('edit_delete', {status:false, data :[], admin:admin});
      }
      else{
-        res.render("edit_delete", {status:true , data:result[0]});
+        res.render("edit_delete", {status:true , data:result[0], admin:admin});
      }
    })
 })
@@ -112,7 +128,12 @@ router.post("/final_picture_edit",upload.single("picture"),function(req,res){
     })
 })
 router.get("/search_by_id",function(req,res){
+      var admin = check_user(localStorage);
+      if(admin){
     res.render("search_by_id",{message:" "});
+      } else {
+        res.redirect('/admin/login_page');
+      }
 })
 
  router.post('/fetch_by_id', function(req,res){

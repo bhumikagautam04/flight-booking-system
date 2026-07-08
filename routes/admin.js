@@ -34,7 +34,7 @@ router.get('/dashboard', function(req, res, next) {
 router.get("/login_page",function(req,res){
     var admin = check_user(localStorage);
     if(admin){
-        return res.redirect("/admin/dashboard");
+        return res.redirect("/admin/dashboard",{data:admin});
     }else{
     res.render("login_page");
 }

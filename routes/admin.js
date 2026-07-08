@@ -4,11 +4,13 @@ var router = express.Router();
 var {LocalStorage} =require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
 const {check_user} = require('./checkuser');
+var jwt =require('jsonwebtoken');
+var verify_token = require('./checkuser');
 
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
 
-    var admin = check_user(localStorage);
+   var admin = verify_token(localStorage.getItem('token'));
 
     if (!admin) {
         return res.redirect("/admin/login_page");
@@ -32,9 +34,9 @@ router.get('/dashboard', function(req, res, next) {
 });
 
 router.get("/login_page",function(req,res){
-    var admin = check_user(localStorage);
+    var admin =   verify_token(localStorage.getItem('token'));
     if(admin){
-        return res.redirect("/admin/dashboard");
+        return res.redirect("/admin/dashboard",{data:admin});
     }else{
     res.render("login_page");
 }
@@ -54,7 +56,9 @@ router.post("/chk_login", function(req, res) {
             }
 
             if (result.length == 1) {
-              localStorage.setItem("ADMIN_LOGIN", JSON.stringify(result[0]));
+          var token = jwt.sign(result[0], 'BHUMIKA', { expiresIn: '30m' });
+            localStorage.setItem('token', token);
+            console.log(token);
             res.redirect('/admin/dashboard',);
 
             } else {

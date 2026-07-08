@@ -1,16 +1,17 @@
- 
- function check_user(localStorage){
- try {
-    var data= JSON.parse(localStorage.getItem("ADMIN_LOGIN"));
-    if(data==null){
-      return false
-    }
-    else{
-    return data
-    }
-  }catch (e){
+ var jwt =require('jsonwebtoken');
 
-  return false
-  }
+
+ function verify_token(token){
+ if(!token){
+  return false;
+ }
+ try {
+  var user = jwt.verify(token, 'BHUMIKA');
+  console.log('user',user);
+  return user;
+
+ } catch (error) {
+  return false;
+ }
 }
-module.exports={check_user};
+module.exports = verify_token;

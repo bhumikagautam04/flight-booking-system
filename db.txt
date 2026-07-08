@@ -99,22 +99,15 @@ VALUES
 
 CREATE TABLE admin (    
 
-    city_id INT,
-    flight_id INT,
+    emailid  VARCHAR(100) ,
+    mobileno VARCHAR(10)  ,
 
-    email VARCHAR(100) primary key,
-    mobile_no INT primary key                                                                   ,
-
-    admin_name VARCHAR(100),
+    adminname VARCHAR(100),
     password VARCHAR(100),
 
     picture TEXT,
 
-    FOREIGN KEY (city_id)
-    REFERENCES city(city_id),
-
-    FOREIGN KEY (flight_id)
-    REFERENCES flight(flight_id)
+   PRIMARY KEY (emailid,mobile_no)
 );
 
 

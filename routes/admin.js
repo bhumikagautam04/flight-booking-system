@@ -25,4 +25,35 @@ router.get("/login_page",function(req,res){
     res.render("login_page");
 })
 
+
+router.post("/chk_login", function(req, res) {
+
+    pool.query(
+        "select * from admin where (emailid=? or mobileno=?) and password=?",
+        [req.body.emailid, req.body.emailid, req.body.pwd],
+        function(err, result) {
+
+            if (err) {
+                return res.render("login_page", {
+                    message: "Server Error"
+                });
+            }
+
+            if (result.length == 1) {
+            res.redirect('/admin/dashboard');
+
+            } else {
+
+                return res.render("login_page", {
+                    message: "Invalid EmailID / Mobile No / Password"
+                });
+
+            }
+        }
+    );
+
+});
+
+
+
 module.exports = router;

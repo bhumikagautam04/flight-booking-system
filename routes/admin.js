@@ -8,7 +8,7 @@ const {check_user} = require('./checkuser');
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
 
-    var admin = check_user(localStorage);
+    var admin = check_user(req);
 
     if (!admin) {
         return res.redirect("/admin/login_page");
@@ -32,7 +32,7 @@ router.get('/dashboard', function(req, res, next) {
 });
 
 router.get("/login_page",function(req,res){
-    var admin = check_user(localStorage);
+    var admin = check_user(req);
     if(admin){
         return res.redirect("/admin/dashboard");
     }else{
@@ -54,9 +54,18 @@ router.post("/chk_login", function(req, res) {
             }
 
             if (result.length == 1) {
-              localStorage.setItem("ADMIN_LOGIN", JSON.stringify(result[0]));
-            res.redirect('/admin/dashboard',);
+              req.session.user = JSON.stringify(result[0]);
+              
+                req.session.save(function(err) {
 
+                    if (err) {
+                        return res.render("login_page", {
+                            message: "Session Error"
+                        });
+                    }
+
+             return res.redirect('/admin/dashboard');
+                });
             } else {
 
                 return res.render("login_page", {
@@ -70,7 +79,7 @@ router.post("/chk_login", function(req, res) {
 });
 
     router.get("/logout",function(req,res){
-    localStorage.clear();
+     req.session.destroy();
      res.redirect('/admin/login_page')
 });
 

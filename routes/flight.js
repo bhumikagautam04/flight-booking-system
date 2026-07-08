@@ -7,7 +7,7 @@ var {LocalStorage} =require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
 
 router.get('/flight_interface', function(req,res,next){
-      var admin = check_user(localStorage);
+      var admin = check_user(req);
       if(admin){
         res.render('flight_interface',{message:""});
       } else {
@@ -46,7 +46,7 @@ router.post("/submit_flight_information", upload.single('picture'), function(req
     });
 })
 router.get("/fetch_all_flight",function(req,res){
-      var admin = check_user(localStorage);
+      var admin = check_user(req);
         if(!admin){
             return res.redirect('/admin/login_page');
         }
@@ -60,7 +60,7 @@ router.get("/fetch_all_flight",function(req,res){
     })
 })
 router.get('/edit_delete/:flight_id',function(req,res){
-      var admin = check_user(localStorage);
+      var admin = check_user(req);
       if(!admin){
         return res.redirect('/admin/login_page');
       }
@@ -128,7 +128,7 @@ router.post("/final_picture_edit",upload.single("picture"),function(req,res){
     })
 })
 router.get("/search_by_id",function(req,res){
-      var admin = check_user(localStorage);
+      var admin = check_user(req);
       if(admin){
     res.render("search_by_id",{message:" "});
       } else {
